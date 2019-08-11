@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="common_match_constraint">0dp</dimen>
+
+    <!-- PADDING -->
+    <dimen name="common_padding_tiny">4dp</dimen>
+    <dimen name="common_padding_small">8dp</dimen>
+    <dimen name="common_padding_normal">16dp</dimen>
+    <dimen name="common_padding_xnormal">24dp</dimen>
+    <dimen name="common_padding_large">32dp</dimen>
+    <dimen name="common_padding_xlarge">40dp</dimen>
+    <dimen name="common_padding_big">64dp</dimen>
+    <dimen name="common_padding_xbig">72dp</dimen>
+    <dimen name="common_padding_tall">96dp</dimen>
+    <dimen name="common_padding_xtall">104dp</dimen>
+
+    <!-- MARGIN -->
+    <dimen name="common_margin_tiny">4dp</dimen>
+    <dimen name="common_margin_small">8dp</dimen>
+    <dimen name="common_margin_normal">16dp</dimen>
+    <dimen name="common_margin_xnormal">24dp</dimen>
+    <dimen name="common_margin_large">32dp</dimen>
+    <dimen name="common_margin_xlarge">40dp</dimen>
+    <dimen name="common_margin_big">64dp</dimen>
+    <dimen name="common_margin_xbig">72dp</dimen>
+    <dimen name="common_margin_tall">96dp</dimen>
+    <dimen name="common_margin_xtall">104dp</dimen>
+
+
+    <dimen name="repo_item_avatar_size">30dp</dimen>
+</resources>

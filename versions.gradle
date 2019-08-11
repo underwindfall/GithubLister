@@ -26,7 +26,8 @@ versions.koin = "2.0.1"
 versions.rxBinding = "3.0.0-alpha2"
 versions.retrofit2 = "2.6.0"
 versions.okhttp3 = "4.0.1"
-versions.room_version = "2.2.0-alpha01"
+versions.room_version = "2.2.0-alpha02"
+versions.navigation = "2.1.0-rc01"
 
 def deps = [:]
 //androidX UI library
@@ -110,6 +111,13 @@ room.compiler = "androidx.room:room-compiler:$versions.room_version"
 room.ktx = "androidx.room:room-ktx:$versions.room_version"
 room.rxjava = "androidx.room:room-rxjava2:$versions.room_version"
 deps.room = room
+
+//Navigation
+def navigation = [:]
+navigation.plugin = "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.navigation"
+navigation.lib = "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
+navigation.ui = "androidx.navigation:navigation-ui-ktx:$versions.navigation"
+deps.navigation = navigation
 
 
 ext.deps = deps

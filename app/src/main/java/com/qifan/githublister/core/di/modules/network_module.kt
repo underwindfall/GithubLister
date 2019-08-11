@@ -1,4 +1,4 @@
-package com.qifan.githublister.core.di
+package com.qifan.githublister.core.di.modules
 
 import com.google.gson.GsonBuilder
 import com.qifan.githublister.BuildConfig

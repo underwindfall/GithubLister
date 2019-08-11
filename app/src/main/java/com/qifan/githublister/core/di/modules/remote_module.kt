@@ -1,4 +1,4 @@
-package com.qifan.githublister.core.di
+package com.qifan.githublister.core.di.modules
 
 import com.qifan.githublister.network.RepoService
 import org.koin.dsl.module
