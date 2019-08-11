@@ -7,6 +7,7 @@ import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory
 import com.bumptech.glide.load.engine.cache.LruResourceCache
 import com.bumptech.glide.module.AppGlideModule
+import com.bumptech.glide.request.RequestOptions
 import com.qifan.githublister.R
 
 /**
@@ -35,12 +36,13 @@ class GithubGlideModule : AppGlideModule() {
 }
 
 
-fun ImageView.loadFromUrl(url: String) {
+fun ImageView.loadAvatar(url: String) {
     GithubGlide.with(context)
         .asBitmap()
         .load(url)
         .placeholder(R.drawable.placeholder)
         .centerCrop()
+        .apply(RequestOptions.circleCropTransform())
         .error(R.drawable.placeholder)
         .into(this)
 }

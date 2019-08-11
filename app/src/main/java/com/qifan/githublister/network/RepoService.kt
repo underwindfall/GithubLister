@@ -1,6 +1,6 @@
 package com.qifan.githublister.network
 
-import com.qifan.githublister.model.RepositoryModel
+import com.qifan.githublister.model.RepoModel
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -11,5 +11,5 @@ import retrofit2.http.Query
 interface RepoService {
 
     @GET("repositories?")
-    fun getRepositories(@Query("since") since: Int?): Single<List<RepositoryModel>>
+    fun getRepositories(@Query("since") since: Int?): Single<List<RepoModel>>
 }

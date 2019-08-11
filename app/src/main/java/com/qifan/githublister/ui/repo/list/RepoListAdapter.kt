@@ -7,8 +7,8 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.qifan.githublister.R
 import com.qifan.githublister.core.extension.inflateLayout
-import com.qifan.githublister.core.extension.loadFromUrl
-import com.qifan.githublister.model.RepositoryModel
+import com.qifan.githublister.core.extension.loadAvatar
+import com.qifan.githublister.model.RepoModel
 import io.reactivex.processors.PublishProcessor
 
 /**
@@ -18,7 +18,7 @@ private const val VIEW_TYPE_ITEM = 1
 private const val VIEW_TYPE_EMPTY = 2
 
 class RepoListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val repositories: MutableList<RepositoryModel> = mutableListOf()
+    private val repos: MutableList<RepoModel> = mutableListOf()
     private val mOnItemSelected: PublishProcessor<Int> = PublishProcessor.create()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -30,23 +30,23 @@ class RepoListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is RepoItemViewHolder -> bindRepoItemViewHolder(holder, repositories[position])
+            is RepoItemViewHolder -> bindRepoItemViewHolder(holder, repos[position])
         }
     }
 
-    fun setData(data: List<RepositoryModel>) {
-        repositories.clear()
-        repositories.addAll(data)
+    fun setData(data: List<RepoModel>) {
+        repos.clear()
+        repos.addAll(data)
         notifyDataSetChanged()
     }
 
-    override fun getItemCount() = when (repositories.size) {
+    override fun getItemCount() = when (repos.size) {
         0 -> 1
-        else -> repositories.size
+        else -> repos.size
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (repositories.size) {
+        return when (repos.size) {
             0 -> VIEW_TYPE_EMPTY
             else -> VIEW_TYPE_ITEM
         }
@@ -62,18 +62,18 @@ class RepoListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return EmptyViewHolder(view)
     }
 
-    private fun bindRepoItemViewHolder(holder: RepoItemViewHolder, repositoryModel: RepositoryModel) {
-        holder.title.text = repositoryModel.name
-        holder.avatar.loadFromUrl(repositoryModel.owner.avatar_url)
-        holder.author.text = repositoryModel.owner.login
-        repositoryModel.description?.run {
+    private fun bindRepoItemViewHolder(holder: RepoItemViewHolder, repoModel: RepoModel) {
+        holder.title.text = repoModel.name
+        holder.avatar.loadAvatar(repoModel.owner.avatar_url)
+        holder.author.text = repoModel.owner.login
+        repoModel.description?.run {
             holder.description.text = this
         } ?: holder.apply {
             description.visibility = View.GONE
         }
 
         holder.itemView.setOnClickListener {
-            mOnItemSelected.onNext(repositoryModel.id)
+            mOnItemSelected.onNext(repoModel.id)
         }
     }
 

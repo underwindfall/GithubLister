@@ -27,5 +27,5 @@
     <dimen name="common_margin_xtall">104dp</dimen>
 
 
-    <dimen name="repo_item_avatar_size">30dp</dimen>
+    <dimen name="repo_item_avatar_size">50dp</dimen>
 </resources>
