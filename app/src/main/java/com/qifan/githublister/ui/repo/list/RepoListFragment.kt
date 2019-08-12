@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit
  */
 class RepoListFragment : BaseFragment(), ReactiveBehavior {
     private val repoListViewModel: RepoListViewModel by inject()
+    private var isFirstLoad = true
     private lateinit var viewAdapter: RepoListAdapter
     override fun getLayoutId(): Int = R.layout.fragment_repo_list_layout
     override fun getMenuId(): Int? = null
@@ -89,15 +90,26 @@ class RepoListFragment : BaseFragment(), ReactiveBehavior {
     private fun getRepoList(viewModel: RepoListViewModel) = viewModel.repos
         .success
         .mainThread()
-        .doOnNext { viewAdapter.setData(it) }
+        .doOnNext {
+            viewAdapter.setData(it)
+            isFirstLoad = false
+        }
 
     private fun displayLoadingView(loading: Boolean) {
-        if (loading) {
-            repo_recyclerview.visibility = View.GONE
-            progress_bar.visibility = View.VISIBLE
-        } else {
-            repo_recyclerview.visibility = View.VISIBLE
-            progress_bar.visibility = View.GONE
+        when {
+            isFirstLoad -> {
+                repo_recyclerview.visibility = View.GONE
+                progress_bar.visibility = View.VISIBLE
+            }
+            loading -> {
+                repo_recyclerview.visibility = View.VISIBLE
+                progress_bar_footer.visibility = View.VISIBLE
+            }
+            else -> {
+                repo_recyclerview.visibility = View.VISIBLE
+                progress_bar.visibility = View.GONE
+                progress_bar_footer.visibility = View.GONE
+            }
         }
     }
 }

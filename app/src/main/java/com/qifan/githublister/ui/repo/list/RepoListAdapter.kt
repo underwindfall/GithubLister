@@ -9,6 +9,7 @@ import com.qifan.githublister.R
 import com.qifan.githublister.core.extension.inflateLayout
 import com.qifan.githublister.core.extension.loadAvatar
 import com.qifan.githublister.model.RepoModel
+import io.reactivex.Flowable
 import io.reactivex.processors.PublishProcessor
 
 /**
@@ -16,10 +17,12 @@ import io.reactivex.processors.PublishProcessor
  */
 private const val VIEW_TYPE_ITEM = 1
 private const val VIEW_TYPE_EMPTY = 2
+typealias RepoIdentifier = Int
 
 class RepoListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val repos: MutableList<RepoModel> = mutableListOf()
-    private val mOnItemSelected: PublishProcessor<Int> = PublishProcessor.create()
+    private val mOnItemSelected: PublishProcessor<RepoIdentifier> = PublishProcessor.create()
+    val onItemSelected: Flowable<RepoIdentifier> = mOnItemSelected
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {

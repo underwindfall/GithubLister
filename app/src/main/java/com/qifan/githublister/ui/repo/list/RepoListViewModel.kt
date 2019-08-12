@@ -16,13 +16,13 @@ private const val START_INDEX = 0
 
 class RepoListViewModel(private val repoListRepository: RepoListRepository) : BaseViewModel() {
     private val onFetch: PublishProcessor<Int> = PublishProcessor.create()
+
     val repos: ReactiveLoadingState<List<RepoModel>> = ReactiveLoadingState()
 
     private val onRepoList: Flowable<List<RepoModel>> = onFetch
         .switchMapSingle { index ->
             repoListRepository.getPublicRepoList(index)
                 .bindLoadingState(repos)
-
         }
         .share()
 
