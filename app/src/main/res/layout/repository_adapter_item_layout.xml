@@ -5,13 +5,15 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_margin_tiny"
-        android:layout_marginBottom="@dimen/common_margin_tiny">
+        android:background="@drawable/repo_item_border"
+        android:layout_marginStart="@dimen/common_margin_small"
+        android:layout_marginEnd="@dimen/common_margin_small">
 
     <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/avatar"
             android:layout_width="@dimen/repo_item_avatar_size"
             android:layout_height="@dimen/repo_item_avatar_size"
+            android:layout_marginTop="@dimen/common_margin_small"
             app:layout_constraintStart_toStartOf="@+id/view_start"
             app:layout_constraintTop_toTopOf="parent"
             android:contentDescription="@string/notImplemented"

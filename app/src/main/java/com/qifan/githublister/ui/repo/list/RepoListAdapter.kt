@@ -35,7 +35,6 @@ class RepoListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun setData(data: List<RepoModel>) {
-        repos.clear()
         repos.addAll(data)
         notifyDataSetChanged()
     }

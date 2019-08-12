@@ -26,6 +26,6 @@
     <dimen name="common_margin_tall">96dp</dimen>
     <dimen name="common_margin_xtall">104dp</dimen>
 
-
-    <dimen name="repo_item_avatar_size">50dp</dimen>
+    <dimen name="list_gap_default">10dp</dimen>
+    <dimen name="repo_item_avatar_size">40dp</dimen>
 </resources>

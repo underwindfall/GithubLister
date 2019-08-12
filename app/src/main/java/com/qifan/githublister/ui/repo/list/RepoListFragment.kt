@@ -6,8 +6,14 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.qifan.githublister.R
 import com.qifan.githublister.core.base.BaseFragment
+import com.qifan.githublister.core.behavior.BehaviorObservers
+import com.qifan.githublister.core.behavior.builder
+import com.qifan.githublister.core.behavior.reactive.ReactiveBehavior
+import com.qifan.githublister.core.behavior.reactive.reactive
 import com.qifan.githublister.core.extension.reactive.mainThread
 import com.qifan.githublister.core.extension.reactive.subscribeAndLogError
+import com.qifan.githublister.core.helper.rv.decorator.MarginItemDecorator
+import com.qifan.githublister.core.helper.rv.scroll.EndLessScrollListener
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_repo_list_layout.*
 import org.koin.android.ext.android.inject
@@ -16,12 +22,16 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by Qifan on 2019-08-11.
  */
-class RepoListFragment : BaseFragment() {
-    private val compositeDisposable = CompositeDisposable()
+class RepoListFragment : BaseFragment(), ReactiveBehavior {
     private val repoListViewModel: RepoListViewModel by inject()
     private lateinit var viewAdapter: RepoListAdapter
     override fun getLayoutId(): Int = R.layout.fragment_repo_list_layout
     override fun getMenuId(): Int? = null
+    override val behaviors: BehaviorObservers by builder {
+        use(
+            reactive()
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,14 +40,29 @@ class RepoListFragment : BaseFragment() {
 
     private fun setUpView() {
         repo_recyclerview.apply {
-            layoutManager = LinearLayoutManager(context)
+            LinearLayoutManager(context).apply {
+                layoutManager = this
+                with(
+                    MarginItemDecorator(
+                        MarginItemDecorator.Space(
+                            space = resources.getDimension(R.dimen.list_gap_default).toInt(),
+                            marginTop = resources.getDimension(R.dimen.common_margin_normal).toInt()
+                        ),
+                        MarginItemDecorator.Position.VERTICAL
+                    )
+                ) {
+                    addItemDecoration(this)
+                }
+            }
             viewAdapter = RepoListAdapter()
             adapter = viewAdapter
+            addOnScrollListener(EndLessScrollListener { index ->
+                repoListViewModel.fetchPublicRepoList(index)
+            })
         }
-        startObserve(repoListViewModel)
     }
 
-    private fun startObserve(repoListViewModel: RepoListViewModel) {
+    override fun startObserve(compositeDisposable: CompositeDisposable) {
         compositeDisposable.addAll(
             handleLoading(repoListViewModel).subscribeAndLogError(),
             handleError(repoListViewModel).subscribeAndLogError(),
@@ -75,14 +100,4 @@ class RepoListFragment : BaseFragment() {
             progress_bar.visibility = View.GONE
         }
     }
-
-    private fun stopObserve() {
-        compositeDisposable.clear()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        stopObserve()
-    }
-
 }
