@@ -2,6 +2,7 @@ package com.qifan.githublister.ui.feature.repo.detail
 
 import android.view.View
 import android.widget.Toast
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.qifan.githublister.R
 import com.qifan.githublister.core.base.BaseFragment
@@ -88,7 +89,14 @@ class RepoDetailFragment : BaseFragment(), ReactiveBehavior {
         repo_stars.text = getString(R.string.stars, model.stargazersCount)
         repo_forks.text = getString(R.string.forks, model.forksCount)
         repo_watches.text = getString(R.string.watches, model.watchesCount)
-
+        contributors_container.setOnClickListener(
+            Navigation.createNavigateOnClickListener(
+                RepoDetailFragmentDirections.actionRepoDetailFragmentToContributorFragment(
+                    model.owner.login,
+                    model.name
+                )
+            )
+        )
     }
 
 }

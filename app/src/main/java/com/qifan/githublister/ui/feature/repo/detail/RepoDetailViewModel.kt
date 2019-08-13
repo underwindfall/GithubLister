@@ -5,7 +5,7 @@ import com.qifan.githublister.core.extension.reactive.ReactiveLoadingState
 import com.qifan.githublister.core.extension.reactive.bindLoadingState
 import com.qifan.githublister.core.extension.reactive.subscribeAndLogError
 import com.qifan.githublister.model.RepoInfoModel
-import com.qifan.githublister.repository.repo.list.RepoListRepository
+import com.qifan.githublister.repository.repo.RepoListRepository
 import io.reactivex.Flowable
 
 /**
