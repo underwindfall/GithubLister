@@ -1,6 +1,6 @@
 package com.qifan.githublister.core.di.modules
 
-import com.qifan.githublister.repository.datasource.repo.list.RepoListRemoteDataSource
+import com.qifan.githublister.datasource.repo.list.RepoListRemoteDataSource
 import org.koin.dsl.module
 
 /**

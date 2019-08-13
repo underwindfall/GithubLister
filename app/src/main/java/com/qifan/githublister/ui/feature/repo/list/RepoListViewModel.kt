@@ -1,4 +1,4 @@
-package com.qifan.githublister.ui.repo.list
+package com.qifan.githublister.ui.feature.repo.list
 
 import com.qifan.githublister.core.base.BaseViewModel
 import com.qifan.githublister.core.extension.reactive.ReactiveLoadingState

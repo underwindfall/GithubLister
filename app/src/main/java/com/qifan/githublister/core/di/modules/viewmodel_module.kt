@@ -1,6 +1,7 @@
 package com.qifan.githublister.core.di.modules
 
-import com.qifan.githublister.ui.repo.list.RepoListViewModel
+import com.qifan.githublister.ui.feature.repo.detail.RepoDetailViewModel
+import com.qifan.githublister.ui.feature.repo.list.RepoListViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -9,4 +10,5 @@ import org.koin.dsl.module
  */
 val viewModelModules = module {
     viewModel { RepoListViewModel(get()) }
+    viewModel { (owner: String, repo: String) -> RepoDetailViewModel(get(), owner, repo) }
 }

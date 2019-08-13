@@ -1,8 +1,9 @@
-package com.qifan.githublister.ui.repo.list
+package com.qifan.githublister.ui.feature.repo.list
 
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.qifan.githublister.R
 import com.qifan.githublister.core.base.BaseFragment
@@ -14,6 +15,7 @@ import com.qifan.githublister.core.extension.reactive.mainThread
 import com.qifan.githublister.core.extension.reactive.subscribeAndLogError
 import com.qifan.githublister.core.helper.rv.decorator.MarginItemDecorator
 import com.qifan.githublister.core.helper.rv.scroll.EndLessScrollListener
+import io.reactivex.Completable
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_repo_list_layout.*
 import org.koin.android.ext.android.inject
@@ -67,7 +69,8 @@ class RepoListFragment : BaseFragment(), ReactiveBehavior {
         compositeDisposable.addAll(
             handleLoading(repoListViewModel).subscribeAndLogError(),
             handleError(repoListViewModel).subscribeAndLogError(),
-            getRepoList(repoListViewModel).subscribeAndLogError()
+            getRepoList(repoListViewModel).subscribeAndLogError(),
+            handleTransactionSelected(viewAdapter).subscribeAndLogError()
         )
     }
 
@@ -112,4 +115,17 @@ class RepoListFragment : BaseFragment(), ReactiveBehavior {
             }
         }
     }
+
+    private fun handleTransactionSelected(adapter: RepoListAdapter) = adapter
+        .onItemSelected
+        .flatMapCompletable { (owner, repo) -> navigateToDetail(owner, repo) }
+
+    private fun navigateToDetail(owner: String, repo: String) = Completable.fromCallable {
+        findNavController().navigate(
+            RepoListFragmentDirections.actionRepoListFragmentToRepoDetailFragment(
+                owner, repo
+            )
+        )
+    }
+
 }

@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        tools:context=".ui.repo.list.RepoListFragment">
+        tools:context=".ui.feature.repo.list.RepoListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/repo_recyclerview"

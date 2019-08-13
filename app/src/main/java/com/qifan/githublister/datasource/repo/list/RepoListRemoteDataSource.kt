@@ -1,8 +1,9 @@
-package com.qifan.githublister.repository.datasource.repo.list
+package com.qifan.githublister.datasource.repo.list
 
+import com.qifan.githublister.datasource.IRemoteDataSource
+import com.qifan.githublister.model.RepoInfoModel
 import com.qifan.githublister.model.RepoModel
 import com.qifan.githublister.network.RepoService
-import com.qifan.githublister.repository.datasource.IRemoteDataSource
 import io.reactivex.Single
 
 /**
@@ -12,5 +13,9 @@ class RepoListRemoteDataSource(private val repoService: RepoService) : IRemoteDa
 
     fun getPublicRepos(startIndex: Int): Single<List<RepoModel>> {
         return repoService.getRepositories(startIndex)
+    }
+
+    fun getRepoInfo(owner: String, repo: String): Single<RepoInfoModel> {
+        return repoService.getRepoInfo(owner, repo)
     }
 }

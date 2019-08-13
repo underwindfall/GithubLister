@@ -1,4 +1,4 @@
-package com.qifan.githublister.repository.datasource
+package com.qifan.githublister.datasource
 
 /**
  * Created by Qifan on 2019-08-11.

@@ -1,4 +1,4 @@
-package com.qifan.githublister.ui.repo.list
+package com.qifan.githublister.ui.feature.repo.list
 
 import android.view.View
 import android.view.ViewGroup
@@ -17,12 +17,11 @@ import io.reactivex.processors.PublishProcessor
  */
 private const val VIEW_TYPE_ITEM = 1
 private const val VIEW_TYPE_EMPTY = 2
-typealias RepoIdentifier = Int
 
 class RepoListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val repos: MutableList<RepoModel> = mutableListOf()
-    private val mOnItemSelected: PublishProcessor<RepoIdentifier> = PublishProcessor.create()
-    val onItemSelected: Flowable<RepoIdentifier> = mOnItemSelected
+    private val mOnItemSelected: PublishProcessor<Pair<String, String>> = PublishProcessor.create()
+    val onItemSelected: Flowable<Pair<String, String>> = mOnItemSelected
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -75,7 +74,7 @@ class RepoListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
 
         holder.itemView.setOnClickListener {
-            mOnItemSelected.onNext(repoModel.id)
+            mOnItemSelected.onNext(Pair(repoModel.owner.login, repoModel.name))
         }
     }
 

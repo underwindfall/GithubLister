@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import com.qifan.githublister.R
 import com.qifan.githublister.core.base.BaseActivity
+import com.qifan.githublister.core.extension.isStartDestination
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
@@ -12,9 +13,27 @@ class MainActivity : BaseActivity() {
     override fun getMenuId(): Int? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setSupportActionBar(toolbar)
         host = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         host.navController.addOnDestinationChangedListener { controller, destination, arguments ->
             toolbar.title = destination.label
+            if (controller.isStartDestination(destination)) hideNavIcon()
+            else showNavIcon()
+        }
+
+    }
+
+    private fun hideNavIcon() {
+        toolbar.apply {
+            navigationIcon = null
+            setNavigationOnClickListener(null)
+        }
+    }
+
+    private fun showNavIcon() {
+        toolbar.apply {
+            navigationIcon = getDrawable(R.drawable.ic_arrow_back_black_24dp)
+            setNavigationOnClickListener { host.navController.popBackStack() }
         }
     }
 }

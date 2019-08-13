@@ -8,8 +8,19 @@
 
     <fragment
             android:id="@+id/repoListFragment"
-            android:name="com.qifan.githublister.ui.repo.list.RepoListFragment"
+            android:name="com.qifan.githublister.ui.feature.repo.list.RepoListFragment"
             android:label="@string/repo_list_label"
-            tools:layout="@layout/fragment_repo_list_layout"/>
+            tools:layout="@layout/fragment_repo_list_layout">
+        <action android:id="@+id/action_repoListFragment_to_repoDetailFragment"
+                app:destination="@id/repoDetailFragment"/>
+    </fragment>
+    <fragment android:id="@+id/repoDetailFragment"
+              android:name="com.qifan.githublister.ui.feature.repo.detail.RepoDetailFragment"
+              android:label="@string/repo_detail_label"
+              tools:layout="@layout/fragment_repo_detail_layout">
+
+        <argument android:name="owner" app:argType="string"/>
+        <argument android:name="repo" app:argType="string"/>
+    </fragment>
 
 </navigation>

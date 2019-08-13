@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.MainActivity">
+
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/author_avatar"
+            android:layout_marginTop="@dimen/common_margin_normal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/view_start"
+            android:layout_width="@dimen/repo_item_avatar_size"
+            android:layout_height="@dimen/repo_item_avatar_size"
+            app:layout_constraintHorizontal_bias="0.0"
+            tools:src="@tools:sample/avatars"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/repo_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common_margin_small"
+            app:layout_constraintTop_toTopOf="@+id/author_avatar"
+            app:layout_constraintStart_toEndOf="@+id/author_avatar"
+            app:layout_constraintEnd_toEndOf="@+id/view_end"
+            tools:text="@tools:sample/lorem"
+            app:layout_constraintHorizontal_bias="0.0"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/repo_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/repo_title"
+            app:layout_constraintStart_toStartOf="@+id/repo_title"
+            app:layout_constraintEnd_toEndOf="@+id/view_end"
+            tools:text="@tools:sample/lorem"
+            app:layout_constraintHorizontal_bias="0.0"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/repo_fork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/repo_des"
+            app:layout_constraintStart_toStartOf="@+id/repo_des"
+            app:layout_constraintEnd_toEndOf="@+id/view_end"
+            android:text="@string/fork"
+            app:layout_constraintHorizontal_bias="0.0"/>
+
+    <View
+            android:id="@+id/separator"
+            android:layout_width="@dimen/common_match_constraint"
+            android:layout_height="1dp"
+            android:background="@color/colorAccent"
+            android:layout_marginTop="@dimen/common_margin_small"
+            app:layout_constraintTop_toBottomOf="@+id/repo_fork"
+            app:layout_constraintStart_toStartOf="@+id/view_start"
+            app:layout_constraintEnd_toEndOf="@+id/view_end"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/repo_stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_margin_small"
+            app:layout_constraintTop_toBottomOf="@+id/separator"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/stars"
+            app:drawableTopCompat="@drawable/ic_star_black_24dp"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toStartOf="@+id/repo_forks"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/repo_forks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/repo_stars"
+            app:layout_constraintStart_toEndOf="@+id/repo_stars"
+            android:text="@string/forks"
+            app:drawableTopCompat="@drawable/ic_all_inclusive_black_24dp"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toStartOf="@+id/repo_watches"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/repo_watches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/repo_stars"
+            app:layout_constraintStart_toEndOf="@+id/repo_forks"
+            android:text="@string/watches"
+            app:drawableTopCompat="@drawable/ic_remove_red_eye_black_24dp"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+            android:id="@+id/separator_1"
+            android:layout_width="@dimen/common_match_constraint"
+            android:layout_height="1dp"
+            android:background="@color/colorAccent"
+            android:layout_marginTop="@dimen/common_margin_small"
+            app:layout_constraintTop_toBottomOf="@+id/repo_watches"
+            app:layout_constraintStart_toStartOf="@+id/view_start"
+            app:layout_constraintEnd_toEndOf="@+id/view_end"/>
+
+    <LinearLayout
+            android:id="@+id/contributors_container"
+            android:layout_width="@dimen/common_match_constraint"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="@dimen/common_padding_small"
+            android:layout_marginTop="@dimen/common_margin_small"
+            app:layout_constraintStart_toStartOf="@+id/view_start"
+            app:layout_constraintTop_toBottomOf="@+id/separator_1"
+            app:layout_constraintEnd_toEndOf="@+id/view_end">
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/contributors"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/contributors"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/contributors_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/details"
+                android:textSize="16sp"/>
+    </LinearLayout>
+
+    <View
+            android:id="@+id/separator_2"
+            android:layout_width="@dimen/common_match_constraint"
+            android:layout_height="1dp"
+            android:background="@color/colorAccent"
+            android:layout_marginTop="@dimen/common_margin_small"
+            app:layout_constraintTop_toBottomOf="@+id/contributors_container"
+            app:layout_constraintStart_toStartOf="@+id/view_start"
+            app:layout_constraintEnd_toEndOf="@+id/view_end"/>
+
+    <LinearLayout
+            android:id="@+id/branch_container"
+            android:layout_width="@dimen/common_match_constraint"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="@dimen/common_padding_small"
+            android:layout_marginTop="@dimen/common_margin_small"
+            app:layout_constraintStart_toStartOf="@+id/view_start"
+            app:layout_constraintTop_toBottomOf="@+id/separator_2"
+            app:layout_constraintEnd_toEndOf="@+id/view_end">
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/branches"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/branches"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/branches_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/details"
+                android:textSize="16sp"/>
+    </LinearLayout>
+
+    <View
+            android:id="@+id/separator_3"
+            android:layout_width="@dimen/common_match_constraint"
+            android:layout_height="1dp"
+            android:background="@color/colorAccent"
+            android:layout_marginTop="@dimen/common_margin_small"
+            app:layout_constraintTop_toBottomOf="@+id/branch_container"
+            app:layout_constraintStart_toStartOf="@+id/view_start"
+            app:layout_constraintEnd_toEndOf="@+id/view_end"/>
+
+    <LinearLayout
+            android:id="@+id/issues_container"
+            android:layout_width="@dimen/common_match_constraint"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="@dimen/common_padding_small"
+            android:layout_marginTop="@dimen/common_margin_small"
+            app:layout_constraintStart_toStartOf="@+id/view_start"
+            app:layout_constraintTop_toBottomOf="@+id/separator_3"
+            app:layout_constraintEnd_toEndOf="@+id/view_end">
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/issues"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/issues"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/issues_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/details"
+                android:textSize="16sp"/>
+    </LinearLayout>
+
+    <View
+            android:id="@+id/separator_4"
+            android:layout_width="@dimen/common_match_constraint"
+            android:layout_height="1dp"
+            android:background="@color/colorAccent"
+            android:layout_marginTop="@dimen/common_margin_small"
+            app:layout_constraintTop_toBottomOf="@+id/issues_container"
+            app:layout_constraintStart_toStartOf="@+id/view_start"
+            app:layout_constraintEnd_toEndOf="@+id/view_end"/>
+
+    <LinearLayout
+            android:id="@+id/prs_container"
+            android:layout_width="@dimen/common_match_constraint"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="@dimen/common_padding_small"
+            android:layout_marginTop="@dimen/common_margin_small"
+            app:layout_constraintStart_toStartOf="@+id/view_start"
+            app:layout_constraintTop_toBottomOf="@+id/separator_4"
+            app:layout_constraintEnd_toEndOf="@+id/view_end">
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/prs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/prs"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/prs_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/details"
+                android:textSize="16sp"/>
+    </LinearLayout>
+
+    <View
+            android:id="@+id/separator_5"
+            android:layout_width="@dimen/common_match_constraint"
+            android:layout_height="1dp"
+            android:background="@color/colorAccent"
+            android:layout_marginTop="@dimen/common_margin_small"
+            app:layout_constraintTop_toBottomOf="@+id/prs_container"
+            app:layout_constraintStart_toStartOf="@+id/view_start"
+            app:layout_constraintEnd_toEndOf="@+id/view_end"/>
+
+    <androidx.constraintlayout.widget.Group
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:constraint_referenced_ids="separator_5,
+            prs_container,separator_4,issues_container,separator_3,branch_container,
+separator_2,contributors_container,separator_1,repo_watches,repo_forks,repo_stars,
+separator,repo_fork,repo_des,repo_title,author_avatar"/>
+
+    <ProgressBar
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"/>
+
+
+    <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/view_start"
+            app:layout_constraintGuide_begin="@dimen/common_margin_normal"
+            android:orientation="vertical"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/view_end"
+            app:layout_constraintGuide_end="@dimen/common_margin_normal"
+            android:orientation="vertical"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
