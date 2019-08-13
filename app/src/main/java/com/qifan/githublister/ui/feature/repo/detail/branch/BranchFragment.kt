@@ -1,4 +1,4 @@
-package com.qifan.githublister.ui.feature.repo.contributor
+package com.qifan.githublister.ui.feature.repo.detail.branch
 
 import android.view.View
 import android.widget.Toast
@@ -13,7 +13,7 @@ import com.qifan.githublister.core.behavior.reactive.reactive
 import com.qifan.githublister.core.extension.reactive.mainThread
 import com.qifan.githublister.core.extension.reactive.subscribeAndLogError
 import com.qifan.githublister.core.helper.rv.decorator.MarginItemDecorator
-import com.qifan.githublister.model.ContributorModel
+import com.qifan.githublister.model.BranchModel
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_list_layout.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -21,12 +21,12 @@ import org.koin.core.parameter.parametersOf
 import java.util.concurrent.TimeUnit
 
 /**
- * Created by Qifan on 2019-08-13.
+ * Created by Qifan on 2019-08-14.
  */
-class ContributorFragment : BaseFragment(), ReactiveBehavior {
-    private val safeArgs: ContributorFragmentArgs by navArgs()
-    private lateinit var viewModel: ContributorViewModel
-    private lateinit var viewAdapter: ContributorAdapter
+class BranchFragment : BaseFragment(), ReactiveBehavior {
+    private val safeArgs: BranchFragmentArgs by navArgs()
+    private lateinit var viewModel: BranchViewModel
+    private lateinit var viewAdapter: BranchAdapter
 
     override fun getLayoutId(): Int = R.layout.fragment_list_layout
 
@@ -48,7 +48,7 @@ class ContributorFragment : BaseFragment(), ReactiveBehavior {
         )
     }
 
-    private fun handleLoading(viewModel: ContributorViewModel) = viewModel.contributors
+    private fun handleLoading(viewModel: BranchViewModel) = viewModel.branches
         .loading
         .debounce(200, TimeUnit.MILLISECONDS)
         .mainThread()
@@ -67,21 +67,21 @@ class ContributorFragment : BaseFragment(), ReactiveBehavior {
     }
 
 
-    private fun handleError(viewModel: ContributorViewModel) = viewModel.contributors
+    private fun handleError(viewModel: BranchViewModel) = viewModel.branches
         .error
         .mainThread()
         .doOnNext { (hasError) ->
             if (hasError) Toast.makeText(requireContext(), "Error loading Contributors", Toast.LENGTH_SHORT).show()
         }
 
-    private fun getContributors(viewModel: ContributorViewModel) = viewModel.contributors
+    private fun getContributors(viewModel: BranchViewModel) = viewModel.branches
         .success
         .mainThread()
         .doOnNext {
             setupView(it)
         }
 
-    private fun setupView(list: List<ContributorModel>) {
+    private fun setupView(list: List<BranchModel>) {
         recycler_view.apply {
             LinearLayoutManager(context).apply {
                 layoutManager = this
@@ -97,7 +97,7 @@ class ContributorFragment : BaseFragment(), ReactiveBehavior {
                     addItemDecoration(this)
                 }
             }
-            viewAdapter = ContributorAdapter()
+            viewAdapter = BranchAdapter()
             adapter = viewAdapter
         }
         viewAdapter.setData(list)

@@ -31,10 +31,23 @@
                 app:exitAnim="@anim/slide_out_left"
                 app:popEnterAnim="@anim/slide_in_right"
                 app:popExitAnim="@anim/slide_out_right"/>
+        <action android:id="@+id/action_repoDetailFragment_to_branchFragment"
+                app:destination="@id/branchFragment"
+                app:enterAnim="@anim/slide_in_left"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_right"
+                app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment android:id="@+id/contributorFragment"
-              android:name="com.qifan.githublister.ui.feature.repo.contributor.ContributorFragment"
+              android:name="com.qifan.githublister.ui.feature.repo.detail.contributor.ContributorFragment"
               android:label="@string/contributor_detail"
+              tools:layout="@layout/fragment_list_layout">
+        <argument android:name="owner" app:argType="string"/>
+        <argument android:name="repo" app:argType="string"/>
+    </fragment>
+    <fragment android:id="@+id/branchFragment"
+              android:name="com.qifan.githublister.ui.feature.repo.detail.branch.BranchFragment"
+              android:label="@string/branch_detail"
               tools:layout="@layout/fragment_list_layout">
         <argument android:name="owner" app:argType="string"/>
         <argument android:name="repo" app:argType="string"/>

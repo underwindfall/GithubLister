@@ -16,4 +16,5 @@
     <string name="prs">Pull Requests</string>
     <string name="repo_detail_label">Github Repo Detail</string>
     <string name="contributor_detail">ContributorsDetail</string>
+    <string name="branch_detail">Branch Detail</string>
 </resources>

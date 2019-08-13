@@ -1,5 +1,6 @@
 package com.qifan.githublister.core.di.modules
 
+import com.qifan.githublister.repository.branch.BranchRepository
 import com.qifan.githublister.repository.contributor.ContributorRepository
 import com.qifan.githublister.repository.repo.RepoListRepository
 import org.koin.dsl.module
@@ -10,4 +11,5 @@ import org.koin.dsl.module
 val repositoryModules = module {
     single { RepoListRepository(get()) }
     single { ContributorRepository(get()) }
+    single { BranchRepository(get()) }
 }

@@ -1,4 +1,4 @@
-package com.qifan.githublister.ui.feature.repo.contributor
+package com.qifan.githublister.ui.feature.repo.detail.branch
 
 import android.view.View
 import android.view.ViewGroup
@@ -7,8 +7,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.qifan.githublister.R
 import com.qifan.githublister.core.extension.inflateLayout
-import com.qifan.githublister.core.extension.loadAvatar
-import com.qifan.githublister.model.ContributorModel
+import com.qifan.githublister.model.BranchModel
 
 /**
  * Created by Qifan on 2019-08-14.
@@ -16,8 +15,8 @@ import com.qifan.githublister.model.ContributorModel
 private const val VIEW_TYPE_ITEM = 1
 private const val VIEW_TYPE_EMPTY = 2
 
-class ContributorAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val contributors: MutableList<ContributorModel> = mutableListOf()
+class BranchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val branches: MutableList<BranchModel> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -28,18 +27,18 @@ class ContributorAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is ContributorItemViewHolder -> bindItemViewHolder(holder, contributors[position])
+            is ContributorItemViewHolder -> bindItemViewHolder(holder, branches[position])
         }
     }
 
     private fun bindItemViewHolder(
         holder: ContributorItemViewHolder,
-        contributorModel: ContributorModel
+        branchModel: BranchModel
     ) {
-        holder.title.visibility = View.GONE
-        holder.description.text = "Number Contribution : ${contributorModel.contributions}"
-        holder.avatar.loadAvatar(contributorModel.avatar_url)
-        holder.author.text = contributorModel.login
+        holder.title.text = branchModel.name
+        holder.description.text = "Number Commit : ${branchModel.commit.sha}"
+        holder.avatar.visibility = View.GONE
+        holder.author.visibility = View.GONE
     }
 
     private fun createItemViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
@@ -53,19 +52,19 @@ class ContributorAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
 
-    fun setData(data: List<ContributorModel>) {
-        contributors.clear()
-        contributors.addAll(data)
+    fun setData(data: List<BranchModel>) {
+        branches.clear()
+        branches.addAll(data)
         notifyDataSetChanged()
     }
 
-    override fun getItemCount() = when (contributors.size) {
+    override fun getItemCount() = when (branches.size) {
         0 -> 1
-        else -> contributors.size
+        else -> branches.size
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (contributors.size) {
+        return when (branches.size) {
             0 -> VIEW_TYPE_EMPTY
             else -> VIEW_TYPE_ITEM
         }

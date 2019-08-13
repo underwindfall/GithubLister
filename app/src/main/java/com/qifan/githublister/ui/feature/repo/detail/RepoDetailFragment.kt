@@ -1,8 +1,10 @@
 package com.qifan.githublister.ui.feature.repo.detail
 
+import android.view.Menu
 import android.view.View
 import android.widget.Toast
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.qifan.githublister.R
 import com.qifan.githublister.core.base.BaseFragment
@@ -97,6 +99,28 @@ class RepoDetailFragment : BaseFragment(), ReactiveBehavior {
                 )
             )
         )
+        branch_container.setOnClickListener(
+            Navigation.createNavigateOnClickListener(
+                RepoDetailFragmentDirections.actionRepoDetailFragmentToBranchFragment(
+                    model.owner.login,
+                    model.name
+                )
+            )
+        )
+
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        val (owner, repo) = safeArgs
+        menu.findItem(R.id.menu_action_branch).setOnMenuItemClickListener {
+            findNavController().navigate(
+                RepoDetailFragmentDirections.actionRepoDetailFragmentToBranchFragment(
+                    owner,
+                    repo
+                )
+            )
+            true
+        }
+        super.onPrepareOptionsMenu(menu)
+    }
 }
