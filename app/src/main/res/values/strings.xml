@@ -4,6 +4,7 @@
     <string name="empty_repo_list">There is no repo. \n Something is wrong with network.</string>
     <string name="repo_list_label">Github Repo List</string>
     <string name="menu_action_close">close</string>
+    <string name="menu_action_branch">branch</string>
     <string name="fork">Fork :%s</string>
     <string name="stars">Stars :%d</string>
     <string name="forks">Forks :%d</string>

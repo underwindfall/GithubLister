@@ -26,7 +26,7 @@ class RepoDetailFragment : BaseFragment(), ReactiveBehavior {
     private val safeArgs: RepoDetailFragmentArgs by navArgs()
     private lateinit var viewModel: RepoDetailViewModel
     override fun getLayoutId(): Int = R.layout.fragment_repo_detail_layout
-    override fun getMenuId(): Int? = null
+    override fun getMenuId(): Int? = R.menu.branch_menu
     override val behaviors: BehaviorObservers by builder {
         use(
             reactive()
