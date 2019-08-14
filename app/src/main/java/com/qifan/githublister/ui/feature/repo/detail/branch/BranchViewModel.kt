@@ -5,14 +5,14 @@ import com.qifan.githublister.core.extension.reactive.ReactiveLoadingState
 import com.qifan.githublister.core.extension.reactive.bindLoadingState
 import com.qifan.githublister.core.extension.reactive.subscribeAndLogError
 import com.qifan.githublister.model.BranchModel
-import com.qifan.githublister.repository.branch.BranchRepository
+import com.qifan.githublister.repository.repo.RepoListRepository
 import io.reactivex.Flowable
 
 /**
  * Created by Qifan on 2019-08-14.
  */
 class BranchViewModel(
-    repository: BranchRepository,
+    repository: RepoListRepository,
     owner: String,
     repo: String
 ) : BaseViewModel() {

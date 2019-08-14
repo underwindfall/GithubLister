@@ -5,14 +5,14 @@ import com.qifan.githublister.core.extension.reactive.ReactiveLoadingState
 import com.qifan.githublister.core.extension.reactive.bindLoadingState
 import com.qifan.githublister.core.extension.reactive.subscribeAndLogError
 import com.qifan.githublister.model.PullModel
-import com.qifan.githublister.repository.pull.PullRepository
+import com.qifan.githublister.repository.repo.RepoListRepository
 import io.reactivex.Flowable
 
 /**
  * Created by Qifan on 2019-08-14.
  */
 class PullViewModel(
-    repository: PullRepository,
+    repository: RepoListRepository,
     owner: String,
     repo: String
 ) : BaseViewModel() {

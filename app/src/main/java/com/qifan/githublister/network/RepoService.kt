@@ -1,7 +1,6 @@
 package com.qifan.githublister.network
 
-import com.qifan.githublister.model.RepoInfoModel
-import com.qifan.githublister.model.RepoModel
+import com.qifan.githublister.model.*
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -20,4 +19,16 @@ interface RepoService {
         @Path("owner") owner: String,
         @Path("repo") repo: String
     ): Single<RepoInfoModel>
+
+    @GET("repos/{owner}/{repo}/branches")
+    fun getBranches(@Path("owner") owner: String, @Path("repo") repo: String): Single<List<BranchModel>>
+
+    @GET("repos/{owner}/{repo}/pulls")
+    fun getPulls(@Path("owner") owner: String, @Path("repo") repo: String): Single<List<PullModel>>
+
+    @GET("repos/{owner}/{repo}/issues")
+    fun getIssues(@Path("owner") owner: String, @Path("repo") repo: String): Single<List<IssueModel>>
+
+    @GET("repos/{owner}/{repo}/contributors")
+    fun getContributors(@Path("owner") owner: String, @Path("repo") repo: String): Single<List<ContributorModel>>
 }

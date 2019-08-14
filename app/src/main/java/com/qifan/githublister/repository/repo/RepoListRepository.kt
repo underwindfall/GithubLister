@@ -2,8 +2,7 @@ package com.qifan.githublister.repository.repo
 
 import com.qifan.githublister.core.extension.reactive.io
 import com.qifan.githublister.datasource.repo.RepoRemoteDataSource
-import com.qifan.githublister.model.RepoInfoModel
-import com.qifan.githublister.model.RepoModel
+import com.qifan.githublister.model.*
 import com.qifan.githublister.repository.RepositoryImpl
 import io.reactivex.Single
 
@@ -20,6 +19,26 @@ class RepoListRepository(private val remote: RepoRemoteDataSource) :
 
     fun getRepoInfo(owner: String, repo: String): Single<RepoInfoModel> {
         return remote.getRepoInfo(owner, repo)
+            .io()
+    }
+
+    fun getBranches(owner: String, repo: String): Single<List<BranchModel>> {
+        return remote.getBranches(owner, repo)
+            .io()
+    }
+
+    fun getPulls(owner: String, repo: String): Single<List<PullModel>> {
+        return remote.getPulls(owner, repo)
+            .io()
+    }
+
+    fun getIssues(owner: String, repo: String): Single<List<IssueModel>> {
+        return remote.getIssues(owner, repo)
+            .io()
+    }
+
+    fun getContributorDetail(owner: String, repo: String): Single<List<ContributorModel>> {
+        return remote.getContributorDetail(owner, repo)
             .io()
     }
 }

@@ -3,7 +3,7 @@ package com.qifan.githublister.ui.feature.repo.list
 import com.qifan.githublister.core.base.BaseViewModel
 import com.qifan.githublister.core.extension.reactive.ReactiveLoadingState
 import com.qifan.githublister.core.extension.reactive.bindLoadingState
-import com.qifan.githublister.core.extension.reactive.logError
+import com.qifan.githublister.core.extension.reactive.subscribeAndLogError
 import com.qifan.githublister.model.RepoModel
 import com.qifan.githublister.repository.repo.RepoListRepository
 import io.reactivex.Flowable
@@ -23,6 +23,7 @@ class RepoListViewModel(private val repoListRepository: RepoListRepository) : Ba
         .switchMapSingle { index ->
             repoListRepository.getPublicRepoList(index)
                 .bindLoadingState(repos)
+                .onErrorReturn { emptyList() }
         }
         .share()
 
@@ -31,8 +32,7 @@ class RepoListViewModel(private val repoListRepository: RepoListRepository) : Ba
 
     init {
         onRepoList
-            .logError()
-            .subscribe()
+            .subscribeAndLogError()
             .let(compositeDisposable::add)
 
         fetchPublicRepoList(START_INDEX)
