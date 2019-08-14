@@ -108,6 +108,24 @@ class RepoDetailFragment : BaseFragment(), ReactiveBehavior {
             )
         )
 
+        issues_container.setOnClickListener(
+            Navigation.createNavigateOnClickListener(
+                RepoDetailFragmentDirections.actionRepoDetailFragmentToIssueFragment(
+                    model.owner.login,
+                    model.name
+                )
+            )
+        )
+
+        prs_container.setOnClickListener(
+            Navigation.createNavigateOnClickListener(
+                RepoDetailFragmentDirections.actionRepoDetailFragmentToPullFragment(
+                    model.owner.login,
+                    model.name
+                )
+            )
+        )
+
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

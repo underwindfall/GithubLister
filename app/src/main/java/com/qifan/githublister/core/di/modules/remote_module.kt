@@ -1,8 +1,6 @@
 package com.qifan.githublister.core.di.modules
 
-import com.qifan.githublister.network.BranchService
-import com.qifan.githublister.network.ContributorService
-import com.qifan.githublister.network.RepoService
+import com.qifan.githublister.network.*
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
@@ -18,5 +16,11 @@ val remoteModules = module {
     }
     single<BranchService> {
         get<Retrofit>().create(BranchService::class.java)
+    }
+    single<IssueService> {
+        get<Retrofit>().create(IssueService::class.java)
+    }
+    single<PullsService> {
+        get<Retrofit>().create(PullsService::class.java)
     }
 }

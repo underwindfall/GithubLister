@@ -17,4 +17,6 @@
     <string name="repo_detail_label">Github Repo Detail</string>
     <string name="contributor_detail">ContributorsDetail</string>
     <string name="branch_detail">Branch Detail</string>
+    <string name="issue_detail">Issue Detail</string>
+    <string name="pull_detail">Pull Request Detail</string>
 </resources>
