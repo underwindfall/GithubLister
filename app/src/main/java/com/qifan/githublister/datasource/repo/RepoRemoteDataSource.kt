@@ -33,4 +33,8 @@ class RepoRemoteDataSource(private val repoService: RepoService) : IRemoteDataSo
     fun getPulls(owner: String, repo: String): Single<List<PullModel>> {
         return repoService.getPulls(owner, repo)
     }
+
+    fun getSearchRepositories(query: String, page: Int): Single<SearchModel> {
+        return repoService.searchRepositories(query, page)
+    }
 }

@@ -1,4 +1,4 @@
-package com.qifan.githublister.ui.feature.repo.detail
+package com.qifan.githublister.core.base
 
 import android.view.View
 import android.view.ViewGroup
@@ -9,14 +9,14 @@ import com.qifan.githublister.R
 import com.qifan.githublister.core.extension.inflateLayout
 
 /**
- * Created by Qifan on 2019-08-14.
+ * Created by Qifan on 2019-08-15.
  */
 private const val VIEW_TYPE_ITEM = 1
 private const val VIEW_TYPE_EMPTY = 2
 
 
-abstract class DetailAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val branches: MutableList<T> = mutableListOf()
+abstract class BaseAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val dataList: MutableList<T> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -27,7 +27,7 @@ abstract class DetailAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when {
-            branches.isNotEmpty() -> bindItemViewHolder(holder, branches[position])
+            dataList.isNotEmpty() -> bindItemViewHolder(holder, dataList[position])
         }
     }
 
@@ -45,18 +45,17 @@ abstract class DetailAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
 
     fun setData(data: List<T>) {
-        branches.clear()
-        branches.addAll(data)
+        dataList.addAll(data)
         notifyDataSetChanged()
     }
 
-    override fun getItemCount() = when (branches.size) {
+    override fun getItemCount() = when (dataList.size) {
         0 -> 1
-        else -> branches.size
+        else -> dataList.size
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (branches.size) {
+        return when (dataList.size) {
             0 -> VIEW_TYPE_EMPTY
             else -> VIEW_TYPE_ITEM
         }

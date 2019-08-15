@@ -1,24 +1,21 @@
-package com.qifan.githublister.ui.feature.repo.list
+package com.qifan.githublister.ui.feature.search
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.qifan.githublister.core.base.BaseAdapter
 import com.qifan.githublister.core.extension.loadAvatar
-import com.qifan.githublister.model.RepoModel
+import com.qifan.githublister.model.RepoInfoModel
 import io.reactivex.Flowable
 import io.reactivex.processors.PublishProcessor
 
 /**
- * Created by Qifan on 2019-08-11.
+ * Created by Qifan on 2019-08-15.
  */
-private const val VIEW_TYPE_ITEM = 1
-private const val VIEW_TYPE_EMPTY = 2
-
-class RepoListAdapter : BaseAdapter<RepoModel>() {
+class SearchAdapter : BaseAdapter<RepoInfoModel>() {
     private val mOnItemSelected: PublishProcessor<Pair<String, String>> = PublishProcessor.create()
     val onItemSelected: Flowable<Pair<String, String>> = mOnItemSelected
 
-    override fun bindItemViewHolder(holder: RecyclerView.ViewHolder, model: RepoModel) {
+    override fun bindItemViewHolder(holder: RecyclerView.ViewHolder, model: RepoInfoModel) {
         (holder as BaseAdapter<*>.ItemViewHolder).apply {
             holder.title.text = model.name
             holder.avatar.loadAvatar(model.owner.avatar_url)

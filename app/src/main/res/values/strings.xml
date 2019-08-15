@@ -19,4 +19,5 @@
     <string name="branch_detail">Branch Detail</string>
     <string name="issue_detail">Issue Detail</string>
     <string name="pull_detail">Pull Request Detail</string>
+    <string name="search_hint">search repository</string>
 </resources>

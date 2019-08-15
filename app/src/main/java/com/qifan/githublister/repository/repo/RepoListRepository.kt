@@ -41,4 +41,9 @@ class RepoListRepository(private val remote: RepoRemoteDataSource) :
         return remote.getContributorDetail(owner, repo)
             .io()
     }
+
+    fun getSearchRepositories(query: String, page: Int): Single<SearchModel> {
+        return remote.getSearchRepositories(query, page)
+            .io()
+    }
 }

@@ -20,7 +20,22 @@
                 android:id="@+id/toolbar"
                 app:titleTextColor="@android:color/white"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"/>
+                android:layout_height="?attr/actionBarSize">
+
+            <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    app:iconifiedByDefault="false"
+                    app:queryBackground="@null"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    app:queryHint="@string/search_hint"
+                    app:searchIcon="@drawable/ic_search_black_24dp"
+                    app:showDividers="none"
+                    app:submitBackground="@null"/>
+
+        </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 

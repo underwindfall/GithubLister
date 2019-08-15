@@ -1,5 +1,6 @@
 package com.qifan.githublister.ui.feature.repo.detail.branch
 
+import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.navigation.fragment.navArgs
@@ -13,7 +14,6 @@ import com.qifan.githublister.core.behavior.reactive.reactive
 import com.qifan.githublister.core.extension.reactive.mainThread
 import com.qifan.githublister.core.extension.reactive.subscribeAndLogError
 import com.qifan.githublister.core.helper.rv.decorator.MarginItemDecorator
-import com.qifan.githublister.model.BranchModel
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_list_layout.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -78,10 +78,15 @@ class BranchFragment : BaseFragment(), ReactiveBehavior {
         .success
         .mainThread()
         .doOnNext {
-            setupView(it)
+            viewAdapter.setData(it)
         }
 
-    private fun setupView(list: List<BranchModel>) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupView()
+    }
+
+    private fun setupView() {
         recycler_view.apply {
             LinearLayoutManager(context).apply {
                 layoutManager = this
@@ -100,7 +105,6 @@ class BranchFragment : BaseFragment(), ReactiveBehavior {
             viewAdapter = BranchAdapter()
             adapter = viewAdapter
         }
-        viewAdapter.setData(list)
     }
 
 }

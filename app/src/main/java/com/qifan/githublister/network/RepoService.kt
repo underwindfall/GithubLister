@@ -31,4 +31,14 @@ interface RepoService {
 
     @GET("repos/{owner}/{repo}/contributors")
     fun getContributors(@Path("owner") owner: String, @Path("repo") repo: String): Single<List<ContributorModel>>
+
+
+    @GET("search/repositories?")
+    fun searchRepositories(
+        @Query(
+            value = "q",
+            encoded = true
+        ) query: String, @Query("page") page: Int
+    ): Single<SearchModel>
+
 }
