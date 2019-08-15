@@ -3,9 +3,9 @@ package com.qifan.githublister.ui.feature.repo.detail
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.jakewharton.rxbinding3.view.clicks
 import com.qifan.githublister.R
 import com.qifan.githublister.core.base.BaseFragment
 import com.qifan.githublister.core.behavior.BehaviorObservers
@@ -46,7 +46,11 @@ class RepoDetailFragment : BaseFragment(), ReactiveBehavior {
         compositeDisposable.addAll(
             handleLoading(viewModel).subscribeAndLogError(),
             handleError(viewModel).subscribeAndLogError(),
-            getRepoInfo(viewModel).subscribeAndLogError()
+            getRepoInfo(viewModel).subscribeAndLogError(),
+            handleContainerClick(contributors_container, Triple(owner, repo, CONTRIBUTOR)).subscribeAndLogError(),
+            handleContainerClick(branch_container, Triple(owner, repo, BRANCH)).subscribeAndLogError(),
+            handleContainerClick(issues_container, Triple(owner, repo, ISSUE)).subscribeAndLogError(),
+            handleContainerClick(prs_container, Triple(owner, repo, PR)).subscribeAndLogError()
         )
     }
 
@@ -95,60 +99,28 @@ class RepoDetailFragment : BaseFragment(), ReactiveBehavior {
         repo_stars.text = getString(R.string.stars, model.stargazersCount)
         repo_forks.text = getString(R.string.forks, model.forksCount)
         repo_watches.text = getString(R.string.watches, model.watchesCount)
-        contributors_container.setOnClickListener(
-            Navigation.createNavigateOnClickListener(
-                RepoDetailFragmentDirections.actionRepoDetailFragmentToRepoInfoFragment(
-                    model.owner.login,
-                    model.name,
-                    CONTRIBUTOR
-                )
-            )
-        )
-        branch_container.setOnClickListener(
-            getNavigationListener(
-                model.owner.login,
-                model.name,
-                BRANCH
-            )
-        )
-
-        issues_container.setOnClickListener(
-            getNavigationListener(
-                model.owner.login,
-                model.name,
-                ISSUE
-            )
-        )
-
-        prs_container.setOnClickListener(
-            getNavigationListener(
-                model.owner.login,
-                model.name,
-                PR
-            )
-        )
-
     }
+
+
+    private fun handleContainerClick(view: View, paramaters: Triple<String, String, Int>) = view.clicks()
+        .doOnNext { navigateRepoDetail(paramaters) }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         val (owner, repo) = safeArgs
         menu.findItem(R.id.menu_action_branch).setOnMenuItemClickListener {
-            findNavController().navigate(
-                RepoDetailFragmentDirections.actionRepoDetailFragmentToRepoInfoFragment(
-                    owner,
-                    repo,
-                    BRANCH
-                )
-            )
+            navigateRepoDetail(Triple(owner, repo, BRANCH))
             true
         }
         super.onPrepareOptionsMenu(menu)
     }
 
-    private fun getNavigationListener(owner: String, repo: String, type: Int): View.OnClickListener {
-        return Navigation.createNavigateOnClickListener(
+    private fun navigateRepoDetail(paramaters: Triple<String, String, Int>) {
+        val (owner, repo, type) = paramaters
+        findNavController().navigate(
             RepoDetailFragmentDirections.actionRepoDetailFragmentToRepoInfoFragment(
-                owner, repo, type
+                owner,
+                repo,
+                type
             )
         )
     }

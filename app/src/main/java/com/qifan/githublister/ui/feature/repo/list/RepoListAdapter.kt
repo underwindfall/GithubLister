@@ -11,8 +11,6 @@ import io.reactivex.processors.PublishProcessor
 /**
  * Created by Qifan on 2019-08-11.
  */
-private const val VIEW_TYPE_ITEM = 1
-private const val VIEW_TYPE_EMPTY = 2
 
 class RepoListAdapter : BaseAdapter<RepoModel>() {
     private val mOnItemSelected: PublishProcessor<Pair<String, String>> = PublishProcessor.create()

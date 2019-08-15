@@ -14,5 +14,5 @@
             android:textColor="@color/colorPrimary"
             android:textAlignment="center"
             android:layout_gravity="center"
-            android:text="@string/empty_repo_list"/>
+            android:text="@string/empty_data_list"/>
 </FrameLayout>
