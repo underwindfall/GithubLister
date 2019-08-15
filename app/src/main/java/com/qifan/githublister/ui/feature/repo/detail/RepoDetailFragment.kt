@@ -16,6 +16,10 @@ import com.qifan.githublister.core.extension.loadAvatar
 import com.qifan.githublister.core.extension.reactive.mainThread
 import com.qifan.githublister.core.extension.reactive.subscribeAndLogError
 import com.qifan.githublister.model.RepoInfoModel
+import com.qifan.githublister.ui.feature.repo.detail.info.BRANCH
+import com.qifan.githublister.ui.feature.repo.detail.info.CONTRIBUTOR
+import com.qifan.githublister.ui.feature.repo.detail.info.ISSUE
+import com.qifan.githublister.ui.feature.repo.detail.info.PR
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_repo_detail_layout.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -93,36 +97,34 @@ class RepoDetailFragment : BaseFragment(), ReactiveBehavior {
         repo_watches.text = getString(R.string.watches, model.watchesCount)
         contributors_container.setOnClickListener(
             Navigation.createNavigateOnClickListener(
-                RepoDetailFragmentDirections.actionRepoDetailFragmentToContributorFragment(
+                RepoDetailFragmentDirections.actionRepoDetailFragmentToRepoInfoFragment(
                     model.owner.login,
-                    model.name
+                    model.name,
+                    CONTRIBUTOR
                 )
             )
         )
         branch_container.setOnClickListener(
-            Navigation.createNavigateOnClickListener(
-                RepoDetailFragmentDirections.actionRepoDetailFragmentToBranchFragment(
-                    model.owner.login,
-                    model.name
-                )
+            getNavigationListener(
+                model.owner.login,
+                model.name,
+                BRANCH
             )
         )
 
         issues_container.setOnClickListener(
-            Navigation.createNavigateOnClickListener(
-                RepoDetailFragmentDirections.actionRepoDetailFragmentToIssueFragment(
-                    model.owner.login,
-                    model.name
-                )
+            getNavigationListener(
+                model.owner.login,
+                model.name,
+                ISSUE
             )
         )
 
         prs_container.setOnClickListener(
-            Navigation.createNavigateOnClickListener(
-                RepoDetailFragmentDirections.actionRepoDetailFragmentToPullFragment(
-                    model.owner.login,
-                    model.name
-                )
+            getNavigationListener(
+                model.owner.login,
+                model.name,
+                PR
             )
         )
 
@@ -132,13 +134,22 @@ class RepoDetailFragment : BaseFragment(), ReactiveBehavior {
         val (owner, repo) = safeArgs
         menu.findItem(R.id.menu_action_branch).setOnMenuItemClickListener {
             findNavController().navigate(
-                RepoDetailFragmentDirections.actionRepoDetailFragmentToBranchFragment(
+                RepoDetailFragmentDirections.actionRepoDetailFragmentToRepoInfoFragment(
                     owner,
-                    repo
+                    repo,
+                    BRANCH
                 )
             )
             true
         }
         super.onPrepareOptionsMenu(menu)
+    }
+
+    private fun getNavigationListener(owner: String, repo: String, type: Int): View.OnClickListener {
+        return Navigation.createNavigateOnClickListener(
+            RepoDetailFragmentDirections.actionRepoDetailFragmentToRepoInfoFragment(
+                owner, repo, type
+            )
+        )
     }
 }

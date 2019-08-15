@@ -1,4 +1,4 @@
-package com.qifan.githublister.ui.feature.repo.detail.contributor
+package com.qifan.githublister.ui.feature.repo.detail.info
 
 import android.os.Bundle
 import android.view.View
@@ -14,18 +14,24 @@ import com.qifan.githublister.core.behavior.reactive.reactive
 import com.qifan.githublister.core.extension.reactive.mainThread
 import com.qifan.githublister.core.extension.reactive.subscribeAndLogError
 import com.qifan.githublister.core.helper.rv.decorator.MarginItemDecorator
+import com.qifan.githublister.ui.feature.repo.detail.info.branch.BranchViewModel
+import com.qifan.githublister.ui.feature.repo.detail.info.contributor.ContributorViewModel
+import com.qifan.githublister.ui.feature.repo.detail.info.issue.IssueViewModel
+import com.qifan.githublister.ui.feature.repo.detail.info.pull.PullViewModel
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_list_layout.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.core.parameter.parametersOf
 import java.util.concurrent.TimeUnit
 
 /**
- * Created by Qifan on 2019-08-13.
+ * Created by Qifan on 2019-08-15.
  */
-class ContributorFragment : BaseFragment(), ReactiveBehavior {
-    private val safeArgs: ContributorFragmentArgs by navArgs()
-    private val mViewModel: ContributorViewModel by viewModel()
-    private lateinit var viewAdapter: ContributorAdapter
+
+class RepoInfoFragment : BaseFragment(), ReactiveBehavior {
+    private val safeArgs: RepoInfoFragmentArgs by navArgs()
+    private lateinit var viewModel: RepoInfoViewModel<*>
+    private lateinit var viewAdapter: RepoInfoAdapter
 
     override fun getLayoutId(): Int = R.layout.fragment_list_layout
 
@@ -39,13 +45,13 @@ class ContributorFragment : BaseFragment(), ReactiveBehavior {
 
     override fun startObserve(compositeDisposable: CompositeDisposable) {
         compositeDisposable.addAll(
-            handleLoading(mViewModel).subscribeAndLogError(),
-            handleError(mViewModel).subscribeAndLogError(),
-            getContributors(mViewModel).subscribeAndLogError()
+            handleLoading(viewModel).subscribeAndLogError(),
+            handleError(viewModel).subscribeAndLogError(),
+            getContributors(viewModel).subscribeAndLogError()
         )
     }
 
-    private fun handleLoading(viewModel: ContributorViewModel) = viewModel.contributors
+    private fun handleLoading(viewModel: RepoInfoViewModel<*>) = viewModel.dataList
         .loading
         .debounce(200, TimeUnit.MILLISECONDS)
         .mainThread()
@@ -64,14 +70,14 @@ class ContributorFragment : BaseFragment(), ReactiveBehavior {
     }
 
 
-    private fun handleError(viewModel: ContributorViewModel) = viewModel.contributors
+    private fun handleError(viewModel: RepoInfoViewModel<*>) = viewModel.dataList
         .error
         .mainThread()
         .doOnNext { (hasError) ->
-            if (hasError) Toast.makeText(requireContext(), "Error loading Contributors", Toast.LENGTH_SHORT).show()
+            if (hasError) Toast.makeText(requireContext(), "Error loading Issues", Toast.LENGTH_SHORT).show()
         }
 
-    private fun getContributors(viewModel: ContributorViewModel) = viewModel.contributors
+    private fun getContributors(viewModel: RepoInfoViewModel<*>) = viewModel.dataList
         .success
         .mainThread()
         .doOnNext {
@@ -100,15 +106,19 @@ class ContributorFragment : BaseFragment(), ReactiveBehavior {
                     addItemDecoration(this)
                 }
             }
-            viewAdapter = ContributorAdapter()
+            viewAdapter = RepoInfoAdapter()
             adapter = viewAdapter
         }
     }
 
-
     private fun getData() {
-        val (owner, repo) = safeArgs
-        mViewModel.getContributors(owner, repo)
+        val (owner, repo, type) = safeArgs
+        when (type) {
+            PR -> viewModel = getViewModel(PullViewModel::class) { parametersOf(type) }
+            ISSUE -> viewModel = getViewModel(IssueViewModel::class) { parametersOf(type) }
+            BRANCH -> viewModel = getViewModel(BranchViewModel::class) { parametersOf(type) }
+            CONTRIBUTOR -> viewModel = getViewModel(ContributorViewModel::class) { parametersOf(type) }
+        }
+        viewModel.getDataList(owner, repo)
     }
-
 }

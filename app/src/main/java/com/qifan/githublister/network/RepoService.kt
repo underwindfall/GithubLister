@@ -1,6 +1,12 @@
 package com.qifan.githublister.network
 
-import com.qifan.githublister.model.*
+import com.qifan.githublister.model.RepoInfoModel
+import com.qifan.githublister.model.RepoModel
+import com.qifan.githublister.model.SearchModel
+import com.qifan.githublister.model.detail.BranchModel
+import com.qifan.githublister.model.detail.ContributorModel
+import com.qifan.githublister.model.detail.IssueModel
+import com.qifan.githublister.model.detail.PullModel
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

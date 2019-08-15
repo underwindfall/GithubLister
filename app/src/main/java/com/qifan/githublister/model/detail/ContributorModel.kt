@@ -1,4 +1,4 @@
-package com.qifan.githublister.model
+package com.qifan.githublister.model.detail
 
 import com.google.gson.annotations.SerializedName
 
@@ -16,4 +16,4 @@ data class ContributorModel(
     val avatar_url: String,
     @SerializedName("contributions")
     val contributions: Int
-)
+) : DetailModel

@@ -2,7 +2,13 @@ package com.qifan.githublister.repository.repo
 
 import com.qifan.githublister.core.extension.reactive.io
 import com.qifan.githublister.datasource.repo.RepoRemoteDataSource
-import com.qifan.githublister.model.*
+import com.qifan.githublister.model.RepoInfoModel
+import com.qifan.githublister.model.RepoModel
+import com.qifan.githublister.model.SearchModel
+import com.qifan.githublister.model.detail.BranchModel
+import com.qifan.githublister.model.detail.ContributorModel
+import com.qifan.githublister.model.detail.IssueModel
+import com.qifan.githublister.model.detail.PullModel
 import com.qifan.githublister.repository.RepositoryImpl
 import io.reactivex.Single
 
