@@ -6,28 +6,20 @@ import com.qifan.githublister.core.extension.reactive.bindLoadingState
 import com.qifan.githublister.core.extension.reactive.subscribeAndLogError
 import com.qifan.githublister.model.PullModel
 import com.qifan.githublister.repository.repo.RepoListRepository
-import io.reactivex.Flowable
 
 /**
  * Created by Qifan on 2019-08-14.
  */
 class PullViewModel(
-    repository: RepoListRepository,
-    owner: String,
-    repo: String
+    private val repository: RepoListRepository
 ) : BaseViewModel() {
 
     val pulls: ReactiveLoadingState<List<PullModel>> = ReactiveLoadingState()
 
-    private val onPulls: Flowable<List<PullModel>> = repository.getPulls(owner, repo)
+    fun getPulls(owner: String, repo: String) = repository.getPulls(owner, repo)
         .bindLoadingState(pulls)
         .toFlowable()
         .share()
-
-    init {
-        onPulls
-            .subscribeAndLogError()
-            .let(compositeDisposable::add)
-    }
-
+        .subscribeAndLogError()
+        .let(compositeDisposable::add)
 }

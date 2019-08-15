@@ -18,14 +18,14 @@ import com.qifan.githublister.core.helper.rv.scroll.EndLessScrollListener
 import io.reactivex.Completable
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_repo_list_layout.*
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
 /**
  * Created by Qifan on 2019-08-11.
  */
 class RepoListFragment : BaseFragment(), ReactiveBehavior {
-    private val repoListViewModel: RepoListViewModel by inject()
+    private val repoListViewModel: RepoListViewModel by viewModel()
     private var isFirstLoad = true
     private lateinit var viewAdapter: RepoListAdapter
     override fun getLayoutId(): Int = R.layout.fragment_repo_list_layout

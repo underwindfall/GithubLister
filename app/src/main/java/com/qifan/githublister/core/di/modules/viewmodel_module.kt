@@ -16,9 +16,9 @@ import org.koin.dsl.module
 val viewModelModules = module {
     viewModel { RepoListViewModel(get()) }
     viewModel { (owner: String, repo: String) -> RepoDetailViewModel(get(), owner, repo) }
-    viewModel { (owner: String, repo: String) -> ContributorViewModel(get(), owner, repo) }
-    viewModel { (owner: String, repo: String) -> BranchViewModel(get(), owner, repo) }
-    viewModel { (owner: String, repo: String) -> IssueViewModel(get(), owner, repo) }
-    viewModel { (owner: String, repo: String) -> PullViewModel(get(), owner, repo) }
+    viewModel { ContributorViewModel(get()) }
+    viewModel { BranchViewModel(get()) }
+    viewModel { IssueViewModel(get()) }
+    viewModel { PullViewModel(get()) }
     viewModel { (query: String) -> SearchViewModel(query, get()) }
 }

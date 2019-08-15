@@ -6,28 +6,21 @@ import com.qifan.githublister.core.extension.reactive.bindLoadingState
 import com.qifan.githublister.core.extension.reactive.subscribeAndLogError
 import com.qifan.githublister.model.ContributorModel
 import com.qifan.githublister.repository.repo.RepoListRepository
-import io.reactivex.Flowable
 
 /**
  * Created by Qifan on 2019-08-14.
  */
 class ContributorViewModel(
-    repository: RepoListRepository,
-    owner: String,
-    repo: String
+    private val repository: RepoListRepository
 ) : BaseViewModel() {
 
     val contributors: ReactiveLoadingState<List<ContributorModel>> = ReactiveLoadingState()
 
-    private val onContributors: Flowable<List<ContributorModel>> = repository.getContributorDetail(owner, repo)
+    fun getContributors(owner: String, repo: String) = repository.getContributorDetail(owner, repo)
         .bindLoadingState(contributors)
         .toFlowable()
         .share()
-
-    init {
-        onContributors
-            .subscribeAndLogError()
-            .let(compositeDisposable::add)
-    }
+        .subscribeAndLogError()
+        .let(compositeDisposable::add)
 
 }

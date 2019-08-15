@@ -16,8 +16,7 @@ import com.qifan.githublister.core.extension.reactive.subscribeAndLogError
 import com.qifan.githublister.core.helper.rv.decorator.MarginItemDecorator
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_list_layout.*
-import org.koin.androidx.viewmodel.ext.android.getViewModel
-import org.koin.core.parameter.parametersOf
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
 /**
@@ -25,7 +24,7 @@ import java.util.concurrent.TimeUnit
  */
 class BranchFragment : BaseFragment(), ReactiveBehavior {
     private val safeArgs: BranchFragmentArgs by navArgs()
-    private lateinit var viewModel: BranchViewModel
+    private val mViewModel: BranchViewModel by viewModel()
     private lateinit var viewAdapter: BranchAdapter
 
     override fun getLayoutId(): Int = R.layout.fragment_list_layout
@@ -39,12 +38,10 @@ class BranchFragment : BaseFragment(), ReactiveBehavior {
     }
 
     override fun startObserve(compositeDisposable: CompositeDisposable) {
-        val (owner, repo) = safeArgs
-        viewModel = getViewModel { parametersOf(owner, repo) }
         compositeDisposable.addAll(
-            handleLoading(viewModel).subscribeAndLogError(),
-            handleError(viewModel).subscribeAndLogError(),
-            getContributors(viewModel).subscribeAndLogError()
+            handleLoading(mViewModel).subscribeAndLogError(),
+            handleError(mViewModel).subscribeAndLogError(),
+            getContributors(mViewModel).subscribeAndLogError()
         )
     }
 
@@ -84,6 +81,7 @@ class BranchFragment : BaseFragment(), ReactiveBehavior {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupView()
+        getData()
     }
 
     private fun setupView() {
@@ -105,6 +103,11 @@ class BranchFragment : BaseFragment(), ReactiveBehavior {
             viewAdapter = BranchAdapter()
             adapter = viewAdapter
         }
+    }
+
+    private fun getData() {
+        val (owner, repo) = safeArgs
+        mViewModel.getBranches(owner, repo)
     }
 
 }

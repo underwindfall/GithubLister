@@ -6,28 +6,21 @@ import com.qifan.githublister.core.extension.reactive.bindLoadingState
 import com.qifan.githublister.core.extension.reactive.subscribeAndLogError
 import com.qifan.githublister.model.BranchModel
 import com.qifan.githublister.repository.repo.RepoListRepository
-import io.reactivex.Flowable
 
 /**
  * Created by Qifan on 2019-08-14.
  */
 class BranchViewModel(
-    repository: RepoListRepository,
-    owner: String,
-    repo: String
+    private val repository: RepoListRepository
 ) : BaseViewModel() {
 
     val branches: ReactiveLoadingState<List<BranchModel>> = ReactiveLoadingState()
 
-    private val onBranches: Flowable<List<BranchModel>> = repository.getBranches(owner, repo)
+    fun getBranches(owner: String, repo: String) = repository.getBranches(owner, repo)
         .bindLoadingState(branches)
         .toFlowable()
         .share()
-
-    init {
-        onBranches
-            .subscribeAndLogError()
-            .let(compositeDisposable::add)
-    }
+        .subscribeAndLogError()
+        .let(compositeDisposable::add)
 
 }
