@@ -3,9 +3,9 @@ package com.qifan.githublister.ui.feature.repo.detail.info
 import com.qifan.githublister.core.base.BaseViewModel
 import com.qifan.githublister.core.extension.reactive.ReactiveLoadingState
 import com.qifan.githublister.core.extension.reactive.bindLoadingState
-import com.qifan.githublister.core.extension.reactive.subscribeAndLogError
 import com.qifan.githublister.model.detail.DetailModel
 import com.qifan.githublister.repository.repo.RepoListRepository
+import io.reactivex.Flowable
 import io.reactivex.Single
 
 /**
@@ -34,10 +34,8 @@ open class RepoInfoViewModel<T : DetailModel>(
         } as Single<List<T>>
 
 
-    fun getDataList(owner: String, repo: String) = apiCall(owner, repo)
+    fun getDataList(owner: String, repo: String): Flowable<List<T>> = apiCall(owner, repo)
         .bindLoadingState(dataList)
         .toFlowable()
         .share()
-        .subscribeAndLogError()
-        .let(compositeDisposable::add)
 }

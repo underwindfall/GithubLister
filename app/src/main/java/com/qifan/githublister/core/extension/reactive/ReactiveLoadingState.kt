@@ -1,5 +1,6 @@
 package com.qifan.githublister.core.extension.reactive
 
+import androidx.annotation.VisibleForTesting
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.processors.BehaviorProcessor
@@ -10,7 +11,8 @@ import io.reactivex.processors.BehaviorProcessor
 class ReactiveLoadingState<T> {
     private val stateSink: BehaviorProcessor<State<T>> = BehaviorProcessor.createDefault(State(Status.INIT))
 
-    private val state = stateSink
+    @VisibleForTesting
+    val state = stateSink
         .computation()
 
     val loading: Flowable<Boolean> = state

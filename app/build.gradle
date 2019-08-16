@@ -30,6 +30,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -77,18 +80,19 @@ dependencies {
     implementation deps.rx.binding.core
     implementation deps.rx.binding.appcompat
 
-    //db
-    implementation deps.room.runtime
-    kapt deps.room.compiler
-    implementation deps.room.ktx
-    implementation deps.room.rxjava
 
     //navigation graph
     implementation deps.navigation.lib
     implementation deps.navigation.ui
 
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation deps.test.junit
+    testImplementation deps.test.kotlinJUnit
+    testImplementation deps.test.koin
+    testImplementation deps.test.mockito
+
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+
 }

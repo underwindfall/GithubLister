@@ -9,13 +9,13 @@ import org.koin.core.context.startKoin
 /**
  * Created by Qifan on 2019-08-11.
  */
-class App : Application() {
+class GithubListApp : Application() {
     override fun onCreate() {
         super.onCreate()
         // Start Koin
         startKoin {
             androidLogger()
-            androidContext(this@App)
+            androidContext(this@GithubListApp)
             modules(appModule)
         }
     }

@@ -1,5 +1,6 @@
 package com.qifan.githublister.ui.feature.search
 
+import androidx.annotation.VisibleForTesting
 import com.qifan.githublister.core.base.BaseViewModel
 import com.qifan.githublister.core.extension.reactive.ReactiveLoadingState
 import com.qifan.githublister.core.extension.reactive.bindLoadingState
@@ -7,7 +8,7 @@ import com.qifan.githublister.core.extension.reactive.subscribeAndLogError
 import com.qifan.githublister.model.SearchModel
 import com.qifan.githublister.repository.repo.RepoListRepository
 import io.reactivex.Flowable
-import io.reactivex.processors.PublishProcessor
+import io.reactivex.processors.BehaviorProcessor
 
 /**
  * Created by Qifan on 2019-08-15.
@@ -18,11 +19,12 @@ class SearchViewModel(
     searchQuery: String,
     private val repository: RepoListRepository
 ) : BaseViewModel() {
-    private val onFetch: PublishProcessor<Pair<String, Int>> = PublishProcessor.create()
+    private val onFetch: BehaviorProcessor<Pair<String, Int>> = BehaviorProcessor.create()
 
     val search: ReactiveLoadingState<SearchModel> = ReactiveLoadingState()
 
-    private val onSearch: Flowable<SearchModel> = onFetch
+    @VisibleForTesting
+    internal val onSearch: Flowable<SearchModel> = onFetch
         .switchMapSingle { (query, index) ->
             repository.getSearchRepositories(query, index)
                 .bindLoadingState(search)

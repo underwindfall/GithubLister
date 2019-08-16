@@ -14,10 +14,12 @@ import com.qifan.githublister.core.behavior.reactive.reactive
 import com.qifan.githublister.core.extension.reactive.mainThread
 import com.qifan.githublister.core.extension.reactive.subscribeAndLogError
 import com.qifan.githublister.core.helper.rv.decorator.MarginItemDecorator
+import com.qifan.githublister.model.detail.DetailModel
 import com.qifan.githublister.ui.feature.repo.detail.info.branch.BranchViewModel
 import com.qifan.githublister.ui.feature.repo.detail.info.contributor.ContributorViewModel
 import com.qifan.githublister.ui.feature.repo.detail.info.issue.IssueViewModel
 import com.qifan.githublister.ui.feature.repo.detail.info.pull.PullViewModel
+import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_list_layout.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -44,10 +46,12 @@ class RepoInfoFragment : BaseFragment(), ReactiveBehavior {
     }
 
     override fun startObserve(compositeDisposable: CompositeDisposable) {
+        initViewModel()
         compositeDisposable.addAll(
             handleLoading(viewModel).subscribeAndLogError(),
             handleError(viewModel).subscribeAndLogError(),
-            getContributors(viewModel).subscribeAndLogError()
+            getContributors(viewModel).subscribeAndLogError(),
+            getData().subscribeAndLogError()
         )
     }
 
@@ -87,7 +91,6 @@ class RepoInfoFragment : BaseFragment(), ReactiveBehavior {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupView()
-        getData()
     }
 
     private fun setupView() {
@@ -111,14 +114,19 @@ class RepoInfoFragment : BaseFragment(), ReactiveBehavior {
         }
     }
 
-    private fun getData() {
-        val (owner, repo, type) = safeArgs
+    private fun initViewModel() {
+        val (_, _, type) = safeArgs
         when (type) {
             PR -> viewModel = getViewModel(PullViewModel::class) { parametersOf(type) }
             ISSUE -> viewModel = getViewModel(IssueViewModel::class) { parametersOf(type) }
             BRANCH -> viewModel = getViewModel(BranchViewModel::class) { parametersOf(type) }
             CONTRIBUTOR -> viewModel = getViewModel(ContributorViewModel::class) { parametersOf(type) }
         }
-        viewModel.getDataList(owner, repo)
     }
+
+    private fun getData(): Flowable<out List<DetailModel>> {
+        val (owner, repo, _) = safeArgs
+        return viewModel.getDataList(owner, repo)
+    }
+
 }
