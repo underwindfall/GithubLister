@@ -8,7 +8,6 @@ import com.qifan.githublister.core.di.modules.*
 val appModule = listOf(
     netWorkModules,
     remoteModules,
-    schedulerModules,
     viewModelModules,
     repositoryModules,
     dataSourceModules
